@@ -1,8 +1,10 @@
+import { loader } from 'components/Loader/Loader';
 import { ContactListStyled, ListItem } from './ContactList.styled';
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteContact, fetchContacts } from 'redux/operations';
-import { getContacts, getError, getFilter, getIsLoading } from 'redux/selectors';
+import { deleteContact, fetchContacts } from 'redux/contacts/operations';
+import { getContacts, getError, getFilter, getIsLoading } from 'redux/contacts/selectors';
+import { Button, Card, CardBody, SimpleGrid, Text } from '@chakra-ui/react';
 
 const ContactList = () => {
     const dispatch = useDispatch();
@@ -20,19 +22,25 @@ const ContactList = () => {
 
     return (
         <ContactListStyled>
-            {isLoading && !error && <b>Request in progress...</b>}
-            {filteredContacts.map(({ name, phone, id }) => (
-              <ListItem key={id}>
-                  <strong>&#8226;</strong>{name}: {phone}
-                  <button
-                    type="button"
-                    onClick={() => dispatch(deleteContact(id))}
-                >Delete</button>
-              </ListItem>
-              
-          ))}
+            {isLoading && !error && loader}
+            <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
+                {filteredContacts.map(({ name, number, id }) => (
+                    <ListItem key={id}>
+                        <Card>
+                            <CardBody>
+                                <Text fontSize='lg'><strong>&#8226;</strong>{name}: {number}</Text>
+                                <Button colorScheme='blue' size='xs'
+                                    type="button"
+                                    onClick={() => dispatch(deleteContact(id))}
+                                >Delete</Button>
+                            </CardBody>
+                        </Card>
+                    
+                    </ListItem>
+                ))}
+            </SimpleGrid>
         </ContactListStyled>
-    )
+    );
 }
 
 export default ContactList;

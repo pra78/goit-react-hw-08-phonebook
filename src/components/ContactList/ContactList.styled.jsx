@@ -4,7 +4,7 @@ export const ContactListStyled = styled.ul`
 `;
 
 export const ListItem = styled.li`
-    width: 300px;
+    min-width: 200px;
     display: flex;
     justify-content: space-between;
 `;
