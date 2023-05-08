@@ -6,7 +6,7 @@ export const Navigation = () => {
 
   return (
     <nav>
-      <StyledLink to="/">
+      <StyledLink end to="/">
         Home
       </StyledLink>
       {isLoggedIn && (
